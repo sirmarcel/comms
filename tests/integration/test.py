@@ -6,6 +6,17 @@ from time import sleep
 
 comms.announce("testing...")
 
+comms.state(
+    "This is a long message\nwith a title\nover multiple lines\nwhich is great...",
+    title="A Statement",
+)
+
+comms.state(
+    "This is another long message\nbut without a title\ncan you believe it?",
+)
+
+comms.state(["And this...", "is the same thing", "but input as a list."], title="Wow!")
+
 reporter = comms.reporter()
 reporter.start("doing a job")
 reporter.step("with a task")

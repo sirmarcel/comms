@@ -13,7 +13,9 @@ class Comms:
         self.prefix = prefix
 
     def talk(self, msg, full=False):
-        echo(message(msg, prefix=self.prefix, indent="-> ", truncate_message=(not full)))
+        echo(
+            message(msg, prefix=self.prefix, indent="-> ", truncate_message=(not full))
+        )
 
     def warn(self, msg, level=None, full=True):
         echo(
@@ -26,7 +28,7 @@ class Comms:
             )
         )
 
-    def announce(self, msg, full=False):
+    def announce(self, msg, full=False, newline=True):
         echo(
             message(
                 msg,
@@ -35,7 +37,25 @@ class Comms:
                 truncate_message=(not full),
             )
         )
-        echo("")
+        if newline:
+            echo("")
+
+    def state(self, msg, title=None):
+        # multi-line statement
+
+        if title is not None:
+            self.announce(title, full=True, newline=False)
+            indent = 1
+        else:
+            indent = 0
+
+        if isinstance(msg, str):
+            msg = msg.split("\n")
+
+        for line in msg:
+            echo(
+                message(line, prefix=self.prefix, indent=indent, truncate_message=False)
+            )
 
     def task(self, msg, done=False, **kwargs):
         echo(self.task_formatter(msg, done=done, **kwargs))
